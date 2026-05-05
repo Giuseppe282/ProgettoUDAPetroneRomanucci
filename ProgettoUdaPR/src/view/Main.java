@@ -4,6 +4,13 @@
  */
 package view;
 
+import java.awt.HeadlessException;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import model.Product;
+
 /**
  *
  * @author petroner
@@ -33,18 +40,34 @@ public class Main extends javax.swing.JFrame {
         SaveWIthName = new javax.swing.JMenuItem();
         Exit = new javax.swing.JMenuItem();
         Edit = new javax.swing.JMenu();
+        About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         File.setText("File");
 
         Open.setText("Open");
+        Open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpenActionPerformed(evt);
+            }
+        });
         File.add(Open);
 
         Save.setText("Save");
+        Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveActionPerformed(evt);
+            }
+        });
         File.add(Save);
 
         SaveWIthName.setText("Save WIth Name");
+        SaveWIthName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveWIthNameActionPerformed(evt);
+            }
+        });
         File.add(SaveWIthName);
 
         Exit.setText("Exit");
@@ -54,6 +77,9 @@ public class Main extends javax.swing.JFrame {
 
         Edit.setText("Edit");
         jMenuBar1.add(Edit);
+
+        About.setText("About");
+        jMenuBar1.add(About);
 
         setJMenuBar(jMenuBar1);
 
@@ -70,6 +96,18 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
+        openFile();
+    }//GEN-LAST:event_OpenActionPerformed
+
+    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+        saveFile();
+    }//GEN-LAST:event_SaveActionPerformed
+
+    private void SaveWIthNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveWIthNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SaveWIthNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -104,9 +142,12 @@ public class Main extends javax.swing.JFrame {
                 new Main().setVisible(true);
             }
         });
-    }
 
+    }
+    private File currentFile;
+    ArrayList<Product> products = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu About;
     private javax.swing.JMenu Edit;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JMenu File;
@@ -115,4 +156,55 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem SaveWIthName;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
+
+    private void openFile() {
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+
+            try {
+
+                System.out.println("File uploaded: " + file.getAbsolutePath());
+                    
+                JOptionPane.showMessageDialog(this,
+                        "File opened successfully!");
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(this,
+                        "File opening error: " + e.getMessage());
+            }
+        }
+        
+        
+    }
+
+    private void saveFile() {
+        try {
+            if (currentFile == null) {
+                saveFileAs();
+                return;
+            }
+
+            // QUI poi colleghi StoreManager.save(currentFile)
+            System.out.println("Salvataggio su: " + currentFile.getAbsolutePath());
+
+            JOptionPane.showMessageDialog(this,
+                    "File salvato con successo!");
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Errore salvataggio: " + e.getMessage());
+        }
+    }
+
+    private void saveFileAs() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void exitApp() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
 }

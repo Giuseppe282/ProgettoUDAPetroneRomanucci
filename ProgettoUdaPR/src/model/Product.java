@@ -15,7 +15,7 @@ public class Product {
     private Double price;
     private int quantity;
 
-    public Product(int id, String name, String category, String brand, String supplier, Double price, int quantity) {
+    public Product(int id, String name, String category, String brand, Double price, int quantity,String supplier) {
         this.id = id;
         this.name = name;
         this.category = category;
