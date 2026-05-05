@@ -1,0 +1,101 @@
+id,name,category,brand,price,quantity,supplier
+1,SSD 1TB,Storage,Samsung,89.99,15,TechSupplier
+2,RAM 16GB DDR4,Memory,Corsair,75.50,10,HardwarePro
+3,CPU Ryzen 5,CPU,AMD,199.99,5,GlobalParts
+4,SSD 500GB,Storage,Kingston,49.99,20,TechSupplier
+5,RAM 8GB DDR4,Memory,Corsair,39.99,25,HardwarePro
+6,CPU Core i5,CPU,Intel,219.99,7,GlobalParts
+7,HDD 2TB,Storage,Seagate,59.99,18,StorageHub
+8,RAM 32GB DDR4,Memory,G.Skill,129.99,8,HardwarePro
+9,CPU Ryzen 7,CPU,AMD,299.99,6,GlobalParts
+10,SSD 2TB,Storage,Samsung,149.99,10,TechSupplier
+11,RAM 4GB DDR4,Memory,Kingston,19.99,30,HardwarePro
+12,CPU Core i7,CPU,Intel,329.99,4,GlobalParts
+13,HDD 1TB,Storage,Western Digital,44.99,22,StorageHub
+14,RAM 16GB DDR5,Memory,Corsair,109.99,12,HardwarePro
+15,CPU Ryzen 3,CPU,AMD,129.99,9,GlobalParts
+16,SSD 250GB,Storage,Kingston,29.99,35,TechSupplier
+17,RAM 8GB DDR5,Memory,G.Skill,69.99,14,HardwarePro
+18,CPU Core i3,CPU,Intel,139.99,11,GlobalParts
+19,HDD 4TB,Storage,Seagate,89.99,13,StorageHub
+20,RAM 64GB DDR4,Memory,Corsair,249.99,5,HardwarePro
+21,CPU Ryzen 9,CPU,AMD,499.99,3,GlobalParts
+22,SSD 4TB,Storage,Samsung,299.99,6,TechSupplier
+23,RAM 32GB DDR5,Memory,G.Skill,199.99,7,HardwarePro
+24,CPU Threadripper,CPU,AMD,899.99,2,GlobalParts
+25,HDD 500GB,Storage,Western Digital,34.99,28,StorageHub
+26,RAM 8GB DDR3,Memory,Kingston,24.99,40,HardwarePro
+27,CPU Pentium,CPU,Intel,89.99,15,GlobalParts
+28,SSD NVMe 1TB,Storage,Samsung,119.99,16,TechSupplier
+29,RAM 16GB DDR3,Memory,Corsair,59.99,18,HardwarePro
+30,CPU Xeon,CPU,Intel,599.99,4,GlobalParts
+31,HDD 8TB,Storage,Seagate,159.99,9,StorageHub
+32,RAM 128GB DDR4,Memory,G.Skill,499.99,3,HardwarePro
+33,CPU Ryzen 5 5600X,CPU,AMD,249.99,10,GlobalParts
+34,SSD NVMe 2TB,Storage,Samsung,229.99,8,TechSupplier
+35,RAM 64GB DDR5,Memory,Corsair,349.99,6,HardwarePro
+36,CPU Core i9,CPU,Intel,549.99,5,GlobalParts
+37,HDD 6TB,Storage,Western Digital,129.99,11,StorageHub
+38,RAM 4GB DDR3,Memory,Kingston,14.99,50,HardwarePro
+39,CPU Celeron,CPU,Intel,59.99,20,GlobalParts
+40,SSD 120GB,Storage,Kingston,19.99,45,TechSupplier
+41,RAM 2GB DDR3,Memory,Kingston,9.99,60,HardwarePro
+42,CPU Ryzen 7 5800X,CPU,AMD,349.99,7,GlobalParts
+43,HDD 10TB,Storage,Seagate,199.99,5,StorageHub
+44,RAM 16GB Laptop,Memory,Corsair,79.99,13,HardwarePro
+45,CPU Core i5 12400,CPU,Intel,199.99,12,GlobalParts
+46,SSD NVMe 500GB,Storage,Samsung,79.99,22,TechSupplier
+47,RAM 8GB Laptop,Memory,Kingston,39.99,25,HardwarePro
+48,CPU Ryzen 3 4100,CPU,AMD,99.99,14,GlobalParts
+49,HDD 3TB,Storage,Western Digital,74.99,17,StorageHub
+50,RAM 32GB Laptop,Memory,G.Skill,159.99,9,HardwarePro
+51,CPU Core i7 12700K,CPU,Intel,389.99,6,GlobalParts
+52,SSD 960GB,Storage,Kingston,99.99,18,TechSupplier
+53,RAM 8GB ECC,Memory,Crucial,49.99,20,HardwarePro
+54,CPU Xeon Silver,CPU,Intel,699.99,3,GlobalParts
+55,HDD 12TB,Storage,Seagate,249.99,4,StorageHub
+56,RAM 64GB ECC,Memory,Crucial,399.99,5,HardwarePro
+57,CPU Ryzen 9 7950X,CPU,AMD,699.99,2,GlobalParts
+58,SSD NVMe 4TB,Storage,Samsung,399.99,5,TechSupplier
+59,RAM 128GB DDR5,Memory,G.Skill,699.99,2,HardwarePro
+60,CPU Core i9 13900K,CPU,Intel,749.99,3,GlobalParts
+61,HDD 14TB,Storage,Western Digital,279.99,4,StorageHub
+62,RAM 16GB ECC,Memory,Crucial,89.99,11,HardwarePro
+63,CPU Ryzen 5 7600X,CPU,AMD,299.99,8,GlobalParts
+64,SSD 2TB SATA,Storage,Kingston,139.99,10,TechSupplier
+65,RAM 32GB ECC,Memory,Crucial,199.99,7,HardwarePro
+66,CPU Core i5 13600K,CPU,Intel,329.99,6,GlobalParts
+67,HDD 16TB,Storage,Seagate,329.99,3,StorageHub
+68,RAM 8GB ECC,Memory,Crucial,59.99,12,HardwarePro
+69,CPU Ryzen 7 7700X,CPU,AMD,399.99,5,GlobalParts
+70,SSD 1TB SATA,Storage,Kingston,79.99,20,TechSupplier
+71,RAM 4GB ECC,Memory,Crucial,29.99,25,HardwarePro
+72,CPU Core i3 12100,CPU,Intel,129.99,15,GlobalParts
+73,HDD 18TB,Storage,Western Digital,349.99,2,StorageHub
+74,RAM 2GB ECC,Memory,Crucial,19.99,30,HardwarePro
+75,CPU Ryzen 3 3200G,CPU,AMD,89.99,18,GlobalParts
+76,SSD 480GB,Storage,Kingston,59.99,22,TechSupplier
+77,RAM 1GB DDR3,Memory,Kingston,7.99,70,HardwarePro
+78,CPU Pentium Gold,CPU,Intel,109.99,14,GlobalParts
+79,HDD 20TB,Storage,Seagate,399.99,2,StorageHub
+80,RAM 256GB DDR4,Memory,G.Skill,999.99,1,HardwarePro
+81,CPU Ryzen Threadripper Pro,CPU,AMD,1499.99,1,GlobalParts
+82,SSD 8TB,Storage,Samsung,799.99,2,TechSupplier
+83,RAM 512GB DDR4,Memory,G.Skill,1999.99,1,HardwarePro
+84,CPU Xeon Platinum,CPU,Intel,1999.99,1,GlobalParts
+85,HDD 22TB,Storage,Western Digital,449.99,1,StorageHub
+86,RAM 12GB DDR4,Memory,Corsair,69.99,16,HardwarePro
+87,CPU Core i5 11400,CPU,Intel,179.99,13,GlobalParts
+88,SSD 750GB,Storage,Kingston,89.99,19,TechSupplier
+89,RAM 24GB DDR4,Memory,G.Skill,119.99,11,HardwarePro
+90,CPU Ryzen 5 3600,CPU,AMD,199.99,10,GlobalParts
+91,HDD 5TB,Storage,Seagate,109.99,8,StorageHub
+92,RAM 48GB DDR5,Memory,Corsair,279.99,6,HardwarePro
+93,CPU Core i7 11700K,CPU,Intel,349.99,7,GlobalParts
+94,SSD 3TB,Storage,Samsung,259.99,5,TechSupplier
+95,RAM 96GB DDR4,Memory,G.Skill,449.99,4,HardwarePro
+96,CPU Ryzen 7 3700X,CPU,AMD,279.99,9,GlobalParts
+97,HDD 7TB,Storage,Western Digital,139.99,6,StorageHub
+98,RAM 20GB DDR4,Memory,Kingston,99.99,12,HardwarePro
+99,CPU Core i9 10900K,CPU,Intel,499.99,5,GlobalParts
+100,SSD 6TB,Storage,Samsung,599.99,3,TechSupplier
