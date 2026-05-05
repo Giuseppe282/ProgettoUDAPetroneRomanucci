@@ -27,16 +27,33 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        File = new javax.swing.JMenu();
+        Open = new javax.swing.JMenuItem();
+        Save = new javax.swing.JMenuItem();
+        SaveWIthName = new javax.swing.JMenuItem();
+        Exit = new javax.swing.JMenuItem();
+        Edit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        File.setText("File");
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        Open.setText("Open");
+        File.add(Open);
+
+        Save.setText("Save");
+        File.add(Save);
+
+        SaveWIthName.setText("Save WIth Name");
+        File.add(SaveWIthName);
+
+        Exit.setText("Exit");
+        File.add(Exit);
+
+        jMenuBar1.add(File);
+
+        Edit.setText("Edit");
+        jMenuBar1.add(Edit);
 
         setJMenuBar(jMenuBar1);
 
@@ -90,8 +107,12 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu Edit;
+    private javax.swing.JMenuItem Exit;
+    private javax.swing.JMenu File;
+    private javax.swing.JMenuItem Open;
+    private javax.swing.JMenuItem Save;
+    private javax.swing.JMenuItem SaveWIthName;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
