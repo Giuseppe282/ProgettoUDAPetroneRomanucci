@@ -16,11 +16,11 @@ import java.util.ArrayList;
 public class csvReader {
     ArrayList<Product> products;
 
-    public csvReader(String fileName) {
+    public csvReader() {
         this.products = new ArrayList<>();
     }
 
-    public void readFile(String filename) {
+    public ArrayList<Product> readFile(String filename) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line = null;
@@ -37,10 +37,13 @@ public class csvReader {
                 int quantify = Integer.parseInt(info[5]);
                 String supplier = info[6];
                 
+                
+                products.add(new Product(id, name, category, brand, price, quantify, supplier));
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        return products;
     }
 
 }

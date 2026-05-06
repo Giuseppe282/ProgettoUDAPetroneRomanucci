@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import model.Product;
+import model.csvReader;
+import java.io.FileWriter;
+import javax.swing.JMenuItem;
 
 /**
  *
@@ -22,6 +25,21 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+
+        JMenuItem infoItem = new javax.swing.JMenuItem("Info");
+        About.add(infoItem);
+
+        infoItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JOptionPane.showMessageDialog(null,
+                        "Gestione Magazzino v1.0\n"
+                        + "Autori: Riccardo Petrone, Giuseppe Romanucci\n"
+                        + "Anno scolastico: 2025/2026\n"
+                        + "Istituto Blaise Pascal",
+                        "About",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 
     /**
@@ -71,6 +89,11 @@ public class Main extends javax.swing.JFrame {
         File.add(SaveWIthName);
 
         Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
         File.add(Exit);
 
         jMenuBar1.add(File);
@@ -106,44 +129,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_SaveActionPerformed
 
     private void SaveWIthNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveWIthNameActionPerformed
-        // TODO add your handling code here:
+        saveFileAs();
     }//GEN-LAST:event_SaveWIthNameActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        exitApp();
+    }//GEN-LAST:event_ExitActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
-
-    }
     private File currentFile;
     ArrayList<Product> products = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -159,52 +154,56 @@ public class Main extends javax.swing.JFrame {
 
     private void openFile() {
         JFileChooser chooser = new JFileChooser();
-        int result = chooser.showOpenDialog(this);
 
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
-            try {
+            // prendo il file scelto dall'utente
+            currentFile = chooser.getSelectedFile();
 
-                System.out.println("File uploaded: " + file.getAbsolutePath());
-                    
-                JOptionPane.showMessageDialog(this,
-                        "File opened successfully!");
-            } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(this,
-                        "File opening error: " + e.getMessage());
-            }
+            // creo il reader passandogli il percorso del file
+            csvReader reader = new csvReader();
+
+            // leggo il CSV e salvo tutto nell'array
+            products = reader.readFile(currentFile.getAbsolutePath());
+            JOptionPane.showMessageDialog(this, "Caricati " + products.size() + " prodotti");
         }
-        
-        
     }
 
     private void saveFile() {
+        if (currentFile == null) {
+            JOptionPane.showMessageDialog(this, "No files open!");
+            return;
+        }
+
         try {
-            if (currentFile == null) {
-                saveFileAs();
-                return;
+            FileWriter fw = new FileWriter(currentFile);
+
+            for (Product p : products) {
+                fw.write(p.toString() + "\n");
             }
 
-            // QUI poi colleghi StoreManager.save(currentFile)
-            System.out.println("Salvataggio su: " + currentFile.getAbsolutePath());
+            fw.close();
+            JOptionPane.showMessageDialog(this, "file saved!");
 
-            JOptionPane.showMessageDialog(this,
-                    "File salvato con successo!");
-
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Errore salvataggio: " + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
 
     private void saveFileAs() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JFileChooser chooser = new JFileChooser();
+
+        if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            currentFile = chooser.getSelectedFile();
+            saveFile();
+        }
     }
 
     private void exitApp() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int risposta = JOptionPane.showConfirmDialog(this, "Are you sure you want to go out?", "Exit", JOptionPane.YES_NO_OPTION);
+
+        if (risposta == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
-    
-    
 }

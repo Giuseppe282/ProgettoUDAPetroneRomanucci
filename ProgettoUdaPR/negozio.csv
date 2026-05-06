@@ -1,6 +1,4 @@
-id,name,category,brand,price,quantity,supplier
-1,SSD 1TB,Storage,Samsung,89.99,15,TechSupplier
-2,RAM 16GB DDR4,Memory,Corsair,75.50,10,HardwarePro
+2,RAM 16GB DDR4,Memory,Corsair,75.5,10,HardwarePro
 3,CPU Ryzen 5,CPU,AMD,199.99,5,GlobalParts
 4,SSD 500GB,Storage,Kingston,49.99,20,TechSupplier
 5,RAM 8GB DDR4,Memory,Corsair,39.99,25,HardwarePro
