@@ -4,11 +4,25 @@
  */
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 /**
  *
@@ -24,31 +38,97 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public Login() {
-        initComponents();
 
-        setLayout(new java.awt.FlowLayout());
-        add(new JLabel("Username:"));
-        add(txtUsername);
-        add(new JLabel("Password:"));
-        add(txtPassword);
-        add(btnLogin);
+        // ===== FINESTRA =====
+        setTitle("Login - Gestione Magazzino");
+        setSize(450, 350);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
-        setTitle("Login");
-        setSize(200, 150);
-        setVisible(true);
+        Color sfondo = new Color(25, 28, 42);
+        Color pannello = new Color(40, 44, 62);
+        Color blu = new Color(99, 132, 255);
 
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (txtUsername.getText().equals("progetto") && new String(txtPassword.getPassword()).equals("Uda")) {
-                    new Main().setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Incorrect credentials!");
-                }
+        getContentPane().setBackground(sfondo);
+
+        // ===== PANEL CENTRALE =====
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
+        panel.setBackground(pannello);
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+
+        // ===== TITOLO =====
+        JLabel lblTitolo = new JLabel("GESTIONE MAGAZZINO");
+        lblTitolo.setForeground(blu);
+        lblTitolo.setFont(new Font("SansSerif", Font.BOLD, 18));
+
+        // ===== LABEL =====
+        JLabel lblUsername = new JLabel("Username:");
+        JLabel lblPassword = new JLabel("Password:");
+
+        lblUsername.setForeground(Color.WHITE);
+        lblPassword.setForeground(Color.WHITE);
+
+        // ===== CAMPI TESTO =====
+        txtUsername = new JTextField();
+        txtPassword = new JPasswordField();
+
+        txtUsername.setBackground(new Color(55, 60, 82));
+        txtPassword.setBackground(new Color(55, 60, 82));
+
+        txtUsername.setForeground(Color.WHITE);
+        txtPassword.setForeground(Color.WHITE);
+
+        // ===== BOTTONE =====
+        btnLogin = new JButton("Accedi");
+
+        btnLogin.setBackground(blu);
+        btnLogin.setForeground(Color.WHITE);
+        btnLogin.setFocusPainted(false);
+        btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        // ===== AGGIUNTA COMPONENTI =====
+        panel.add(lblUsername);
+        panel.add(txtUsername);
+
+        panel.add(lblPassword);
+        panel.add(txtPassword);
+
+        panel.add(new JLabel());
+        panel.add(btnLogin);
+
+        // ===== WRAPPER =====
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.setBackground(sfondo);
+
+        wrapper.add(lblTitolo, BorderLayout.NORTH);
+        wrapper.add(panel, BorderLayout.CENTER);
+
+        lblTitolo.setHorizontalAlignment(SwingConstants.CENTER);
+
+        add(wrapper);
+
+        // ===== EVENTO LOGIN =====
+        btnLogin.addActionListener(e -> {
+
+            String username = txtUsername.getText();
+            String password = new String(txtPassword.getPassword());
+
+            if (username.equals("progetto") && password.equals("Uda")) {
+
+                JOptionPane.showMessageDialog(this, "Login effettuato!");
+
+                new Main().setVisible(true);
+                dispose();
+
+            } else {
+
+                JOptionPane.showMessageDialog(this, "Credenziali errate!");
+
             }
         });
-        
+
+        setVisible(true);
     }
 
     /**
@@ -75,30 +155,11 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            System.out.println(ex.getMessage());
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+    public static void main(String[] args) {
         new Login();
     }
 

@@ -5,6 +5,7 @@
 package view;
 
 import java.awt.HeadlessException;
+import java.awt.TextArea;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import model.Product;
 import model.csvReader;
 import java.io.FileWriter;
+import javafx.geometry.Pos;
 import javax.swing.JMenuItem;
 
 /**
@@ -51,6 +53,8 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        testo1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
@@ -61,6 +65,10 @@ public class Main extends javax.swing.JFrame {
         About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        testo1.setColumns(20);
+        testo1.setRows(5);
+        jScrollPane1.setViewportView(testo1);
 
         File.setText("File");
 
@@ -110,11 +118,15 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -150,11 +162,27 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem Save;
     private javax.swing.JMenuItem SaveWIthName;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea testo1;
     // End of variables declaration//GEN-END:variables
+private void mostraProdotti() {
+
+        if (products == null || products.isEmpty()) {
+            testo1.setText("");
+            return;
+        }
+
+        String risultato = "";
+
+        for (Product x : products) {
+            risultato += x.toString() + "\n";
+        }
+
+        testo1.setText(risultato);
+    }
 
     private void openFile() {
         JFileChooser chooser = new JFileChooser();
-
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
             // prendo il file scelto dall'utente
@@ -165,7 +193,9 @@ public class Main extends javax.swing.JFrame {
 
             // leggo il CSV e salvo tutto nell'array
             products = reader.readFile(currentFile.getAbsolutePath());
+
             JOptionPane.showMessageDialog(this, "Caricati " + products.size() + " prodotti");
+            mostraProdotti();
         }
     }
 
