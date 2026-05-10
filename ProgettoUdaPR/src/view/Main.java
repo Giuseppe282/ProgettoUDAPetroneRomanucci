@@ -41,6 +41,8 @@ public class Main extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
             }
         });
+        
+        scrollPane.setVisible(false);
     }
 
     /**
@@ -52,8 +54,8 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        testo1 = new javax.swing.JTextArea();
+        scrollPane = new javax.swing.JScrollPane();
+        tblProducts = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
@@ -65,9 +67,23 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        testo1.setColumns(20);
-        testo1.setRows(5);
-        jScrollPane1.setViewportView(testo1);
+        scrollPane.setPreferredSize(new java.awt.Dimension(1200, 1200));
+
+        tblProducts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblProducts.setPreferredSize(new java.awt.Dimension(1200, 800));
+        scrollPane.setViewportView(tblProducts);
+
+        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         File.setText("File");
 
@@ -117,15 +133,15 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,29 +177,41 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem Save;
     private javax.swing.JMenuItem SaveWIthName;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea testo1;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTable tblProducts;
     // End of variables declaration//GEN-END:variables
-private void mostraProdotti() {
-
+ 
+    private void showProducts() {
         if (products == null || products.isEmpty()) {
-            testo1.setText("");
             return;
         }
+        
+        scrollPane.setVisible(true); // fa riapparire la tabella
+        
+        String[] colonne = {"ID", "Name", "Category", "Brand", "Price", "Quantity", "Supplier"};
+        Object[][] dati = new Object[products.size()][7];
 
-        String risultato = "";
-
-        for (Product x : products) {
-            risultato += x.toString() + "\n";
+        for (int i = 0; i < products.size(); i++) {
+            Product p = products.get(i);
+            dati[i][0] = p.getId();
+            dati[i][1] = p.getName();
+            dati[i][2] = p.getCategory();
+            dati[i][3] = p.getBrand();
+            dati[i][4] = p.getPrice();
+            dati[i][5] = p.getQuantity();
+            dati[i][6] = p.getSupplier();
         }
 
-        testo1.setText(risultato);
+        tblProducts.setModel(new javax.swing.table.DefaultTableModel(dati, colonne));
+        pack();
+        revalidate();  
+        repaint(); 
     }
 
     private void openFile() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-
+            
             // prendo il file scelto dall'utente
             currentFile = chooser.getSelectedFile();
 
@@ -194,7 +222,8 @@ private void mostraProdotti() {
             products = reader.readFile(currentFile.getAbsolutePath());
 
             JOptionPane.showMessageDialog(this, "Caricati " + products.size() + " prodotti");
-            mostraProdotti();
+            showProducts();
+            
         }
     }
 
@@ -206,7 +235,9 @@ private void mostraProdotti() {
 
         try {
             FileWriter fw = new FileWriter(currentFile);
-
+            
+            fw.write("ID,Name,Category,Brand,Price,Quantity,Supplier\n");
+            
             for (Product p : products) {
                 fw.write(p.toString() + "\n");
             }
