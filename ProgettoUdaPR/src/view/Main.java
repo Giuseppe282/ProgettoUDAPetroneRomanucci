@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import model.Product;
 import model.csvReader;
 import java.io.FileWriter;
-import javafx.geometry.Pos;
 import javax.swing.JMenuItem;
 
 /**
