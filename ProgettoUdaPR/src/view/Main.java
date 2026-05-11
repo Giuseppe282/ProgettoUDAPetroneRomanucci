@@ -106,7 +106,7 @@ public class Main extends javax.swing.JFrame {
         });
         File.add(Save);
 
-        SaveWIthName.setText("Save WIth Name");
+        SaveWIthName.setText("SaveAs");
         SaveWIthName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveWIthNameActionPerformed(evt);
@@ -190,10 +190,7 @@ public class Main extends javax.swing.JFrame {
             dati[i][6] = p.getSupplier();
         }
 
-        tblProducts.setModel(new javax.swing.table.DefaultTableModel(dati, colonne));
-        pack();
-        revalidate();  
-        repaint(); 
+        tblProducts.setModel(new javax.swing.table.DefaultTableModel(dati, colonne)); 
     }
 
     private void openFile() {
