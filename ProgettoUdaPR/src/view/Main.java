@@ -27,21 +27,6 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
 
-        JMenuItem infoItem = new javax.swing.JMenuItem("Info");
-        About.add(infoItem);
-
-        infoItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JOptionPane.showMessageDialog(null,
-                        "Gestione Magazzino v1.0\n"
-                        + "Autori: Riccardo Petrone, Giuseppe Romanucci\n"
-                        + "Anno scolastico: 2025/2026\n"
-                        + "Istituto Blaise Pascal",
-                        "About",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
-        
         scrollPane.setVisible(false);
     }
 
@@ -63,7 +48,11 @@ public class Main extends javax.swing.JFrame {
         SaveWIthName = new javax.swing.JMenuItem();
         Exit = new javax.swing.JMenuItem();
         Edit = new javax.swing.JMenu();
+        insertItem = new javax.swing.JMenuItem();
+        deleteItem = new javax.swing.JMenuItem();
+        searchItem = new javax.swing.JMenuItem();
         About = new javax.swing.JMenu();
+        Info = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,9 +114,43 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1.add(File);
 
         Edit.setText("Edit");
+
+        insertItem.setText("Insert");
+        insertItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertItemActionPerformed(evt);
+            }
+        });
+        Edit.add(insertItem);
+
+        deleteItem.setText("Delete");
+        deleteItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteItemActionPerformed(evt);
+            }
+        });
+        Edit.add(deleteItem);
+
+        searchItem.setText("Search");
+        searchItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchItemActionPerformed(evt);
+            }
+        });
+        Edit.add(searchItem);
+
         jMenuBar1.add(Edit);
 
         About.setText("About");
+
+        Info.setText("Info");
+        Info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InfoActionPerformed(evt);
+            }
+        });
+        About.add(Info);
+
         jMenuBar1.add(About);
 
         setJMenuBar(jMenuBar1);
@@ -151,6 +174,28 @@ public class Main extends javax.swing.JFrame {
         exitApp();
     }//GEN-LAST:event_ExitActionPerformed
 
+    private void insertItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertItemActionPerformed
+        insertProduct();
+    }//GEN-LAST:event_insertItemActionPerformed
+
+    private void deleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemActionPerformed
+        deleteProduct();
+    }//GEN-LAST:event_deleteItemActionPerformed
+
+    private void searchItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchItemActionPerformed
+        searchProduct();
+    }//GEN-LAST:event_searchItemActionPerformed
+
+    private void InfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InfoActionPerformed
+        JOptionPane.showMessageDialog(null,
+            "Warehouse Management v1.0\n"
+            + "Authors: Riccardo Petrone, Giuseppe Romanucci\n"
+            + "School year: 2025/2026\n"
+            + "Blaise Pascal Institute",
+            "About",
+            JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_InfoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -161,21 +206,24 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu Edit;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JMenu File;
+    private javax.swing.JMenuItem Info;
     private javax.swing.JMenuItem Open;
     private javax.swing.JMenuItem Save;
     private javax.swing.JMenuItem SaveWIthName;
+    private javax.swing.JMenuItem deleteItem;
+    private javax.swing.JMenuItem insertItem;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JMenuItem searchItem;
     private javax.swing.JTable tblProducts;
     // End of variables declaration//GEN-END:variables
- 
+
     private void showProducts() {
         if (products == null || products.isEmpty()) {
             return;
         }
-        
-        scrollPane.setVisible(true); // fa riapparire la tabella
-        
+
+        //scrollPane.setVisible(true); // fa riapparire la tabella
         String[] colonne = {"ID", "Name", "Category", "Brand", "Price", "Quantity", "Supplier"};
         Object[][] dati = new Object[products.size()][7];
 
@@ -190,13 +238,58 @@ public class Main extends javax.swing.JFrame {
             dati[i][6] = p.getSupplier();
         }
 
-        tblProducts.setModel(new javax.swing.table.DefaultTableModel(dati, colonne)); 
+        tblProducts.setModel(new javax.swing.table.DefaultTableModel(dati, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column != 0;
+            }
+        });
+
+        tblProducts.getModel().addTableModelListener(e -> {
+            int row = e.getFirstRow();
+            int col = e.getColumn();
+            Object value = tblProducts.getModel().getValueAt(row, col);
+            Product p = products.get(row);
+
+            try {
+                switch (col) {
+                    case 1:
+                        p.setName(value.toString());
+                        break;
+                    case 2:
+                        p.setCategory(value.toString());
+                        break;
+                    case 3:
+                        p.setBrand(value.toString());
+                        break;
+                    case 4:
+                        p.setPrice(Double.parseDouble(value.toString()));
+                        break;
+                    case 5:
+                        p.setQuantity(Integer.parseInt(value.toString()));
+                        break;
+                    case 6:
+                        p.setSupplier(value.toString());
+                        break;
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "Invalid value! Price must be a decimal number and Quantity must be a whole number.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                showProducts(); // ripristina la tabella con i valori originali
+            }
+        });
+
+        scrollPane.setVisible(true);
+        revalidate();
+        repaint();
     }
 
     private void openFile() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            
+
             // prendo il file scelto dall'utente
             currentFile = chooser.getSelectedFile();
 
@@ -206,9 +299,9 @@ public class Main extends javax.swing.JFrame {
             // leggo il CSV e salvo tutto nell'array
             products = reader.readFile(currentFile.getAbsolutePath());
 
-            JOptionPane.showMessageDialog(this, "Caricati " + products.size() + " prodotti");
+            JOptionPane.showMessageDialog(this, products.size() + " products have been uploaded");
             showProducts();
-            
+
         }
     }
 
@@ -220,9 +313,9 @@ public class Main extends javax.swing.JFrame {
 
         try {
             FileWriter fw = new FileWriter(currentFile);
-            
+
             fw.write("ID,Name,Category,Brand,Price,Quantity,Supplier\n");
-            
+
             for (Product p : products) {
                 fw.write(p.toString() + "\n");
             }
@@ -251,4 +344,123 @@ public class Main extends javax.swing.JFrame {
             System.exit(0);
         }
     }
+
+    private void insertProduct() {
+
+        if (products == null) {
+            JOptionPane.showMessageDialog(this, "opne a file first!");
+            return;
+        }
+
+        ProductDialog dialog = new ProductDialog(this, true);
+        dialog.setVisible(true);
+
+        if (dialog.isSaved()) {
+            Product p = dialog.getProduct();
+
+            int newId = 0;
+            for (Product p2 : products) {
+                if (p2.getId() > newId) {
+                    newId = p2.getId();
+                }
+            }
+            newId++;
+
+            Product newProduct = new Product(newId, p.getName(), p.getCategory(), p.getBrand(), p.getPrice(), p.getQuantity(), p.getSupplier());
+            products.add(newProduct);
+            showProducts();
+            JOptionPane.showMessageDialog(this, "Product added successfully!");
+        }
+    }
+
+    private void deleteProduct() {
+
+        if (products == null) {
+            JOptionPane.showMessageDialog(this, "Open a file first!");
+            return;
+        }
+
+        int selectedRow = tblProducts.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select a product first!");
+            return;
+        }
+
+        Product p = products.get(selectedRow);
+
+        // confir contiene 0,1 o 2 in base alla scelta fatta dall'utente
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to delete:\n" + p.getName() + " (" + p.getBrand() + ")?",
+                "Delete",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            products.remove(selectedRow);
+            showProducts();
+            JOptionPane.showMessageDialog(this, p.getName() + " deleted successfully!");
+        }
+    }
+
+    private void searchProduct() {
+
+        if (products == null) {
+            JOptionPane.showMessageDialog(this, "Open a file first!");
+            return;
+        }
+
+        String[] criteri = {"Name", "Category", "Brand", "Supplier"};
+        String criterio = (String) JOptionPane.showInputDialog(
+                this, "Search by:", "Search",
+                JOptionPane.PLAIN_MESSAGE,
+                null, criteri, criteri[0]
+        );
+        if (criterio == null) {
+            return;
+        }
+
+        String query = JOptionPane.showInputDialog(this, "Enter " + criterio + ":");
+        if (query == null || query.trim().isEmpty()) {
+            return;
+        }
+
+        String q = query.trim().toLowerCase();
+        ArrayList<Product> risultati = new ArrayList<>();
+
+        for (Product p : products) {
+            switch (criterio) {
+                case "Name":
+                    if (p.getName().toLowerCase().contains(q)) {
+                        risultati.add(p);
+                    }
+                    break;
+                case "Category":
+                    if (p.getCategory().toLowerCase().contains(q)) {
+                        risultati.add(p);
+                    }
+                    break;
+                case "Brand":
+                    if (p.getBrand().toLowerCase().contains(q)) {
+                        risultati.add(p);
+                    }
+                    break;
+                case "Supplier":
+                    if (p.getSupplier().toLowerCase().contains(q)) {
+                        risultati.add(p);
+                    }
+                    break;
+            }
+        }
+
+        if (risultati.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No products found.");
+            return;
+        }
+
+        SearchDialog dialog = new SearchDialog(this, true);
+        dialog.showResults(risultati);
+        dialog.setVisible(true);
+    }
+
 }
