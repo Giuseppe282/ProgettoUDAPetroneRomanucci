@@ -180,7 +180,7 @@ public class LoginNew extends javax.swing.JFrame {
         String username = txtUsername.getText();
         String password = new String(txtPassword.getPassword());
         
-        if(username.equals("Progetto") && password.equals("Uda") ){
+        if(username.equals("Project") && password.equals("Uda") ){
             new Main().setVisible(true);
             dispose(); // chiude il login
         }
