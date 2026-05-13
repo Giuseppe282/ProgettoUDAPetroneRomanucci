@@ -196,9 +196,6 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_InfoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     private File currentFile;
     ArrayList<Product> products = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
