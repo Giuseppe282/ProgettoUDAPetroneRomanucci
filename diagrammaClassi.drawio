@@ -1,0 +1,154 @@
+<mxfile host="app.diagrams.net" agent="Claude">
+  <diagram id="gestione-magazzino" name="Class Diagram">
+    <mxGraphModel dx="981" dy="627" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pkg-model" parent="1" style="swimlane;startSize=30;fontStyle=1;fontSize=12;" value="&lt;package&gt; model" vertex="1">
+          <mxGeometry height="800" width="300" x="40" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="product-header" parent="pkg-model" style="swimlane;startSize=30;fontStyle=1;fontSize=13;" value="Product" vertex="1">
+          <mxGeometry height="460" width="260" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="product-attrs" parent="product-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="- id : int&#xa;- name : String&#xa;- category : String&#xa;- brand : String&#xa;- supplier : String&#xa;- price : Double&#xa;- quantity : int" vertex="1">
+          <mxGeometry height="130" width="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="product-sep1" parent="product-header" style="line;" value="" vertex="1">
+          <mxGeometry height="10" width="260" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="product-methods" parent="product-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="+ Product(id, name, category, brand, price, quantity, supplier)&#xa;+ getId() : int&#xa;+ getName() : String&#xa;+ getCategory() : String&#xa;+ getBrand() : String&#xa;+ getSupplier() : String&#xa;+ getPrice() : double&#xa;+ getQuantity() : int&#xa;+ setId(id : int) : void&#xa;+ setName(name : String) : void&#xa;+ setCategory(cat : String) : void&#xa;+ setBrand(brand : String) : void&#xa;+ setSupplier(sup : String) : void&#xa;+ setPrice(price : Double) : void&#xa;+ setQuantity(qty : int) : void&#xa;+ toString() : String" vertex="1">
+          <mxGeometry height="260" width="260" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="csvreader-header" parent="pkg-model" style="swimlane;startSize=30;fontStyle=1;fontSize=13;" value="csvReader" vertex="1">
+          <mxGeometry height="230" width="260" x="20" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="csvreader-attrs" parent="csvreader-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="- products : ArrayList&lt;Product&gt;" vertex="1">
+          <mxGeometry height="40" width="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="csvreader-sep1" parent="csvreader-header" style="line;" value="" vertex="1">
+          <mxGeometry height="10" width="260" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="csvreader-methods" parent="csvreader-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="+ csvReader()&#xa;+ readFile(filename : String) : ArrayList&lt;Product&gt;" vertex="1">
+          <mxGeometry height="50" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xJYpiDoFWObG3JmeJDzM-2" edge="1" parent="pkg-model" source="csvreader-header" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=bottom;rounded=0;exitX=0.786;exitY=-0.001;exitDx=0;exitDy=0;exitPerimeter=0;" target="product-header" value="1">
+          <mxGeometry relative="1" x="-0.9692" y="-6" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="224" y="540" />
+              <mxPoint x="350" y="540" />
+              <mxPoint x="350" y="280" />
+            </Array>
+            <mxPoint x="440" y="300" as="sourcePoint" />
+            <mxPoint x="600" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pkg-controller" parent="1" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=12;" value="&lt;package&gt; controller" vertex="1">
+          <mxGeometry height="220" width="300" x="360" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pm-header" parent="pkg-controller" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=13;" value="ProductManager" vertex="1">
+          <mxGeometry height="130" width="260" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pm-attrs" parent="pm-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="- products : ArrayList&lt;Product&gt;" vertex="1">
+          <mxGeometry height="40" width="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pm-sep1" parent="pm-header" style="line;strokeColor=#9673a6;" value="" vertex="1">
+          <mxGeometry height="10" width="260" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pm-methods" parent="pm-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="+ ProductManager()" vertex="1">
+          <mxGeometry height="40" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pkg-view" parent="1" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" value="&lt;package&gt; view" vertex="1">
+          <mxGeometry height="690" width="560" x="700" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="login-header" parent="pkg-view" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" value="LoginNew" vertex="1">
+          <mxGeometry height="240" width="240" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="login-attrs" parent="login-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="- BtnLogin : JButton&#xa;- txtUsername : JTextField&#xa;- txtPassword : JPasswordField&#xa;- LeftPanel : JPanel&#xa;- RightPanel : JPanel&#xa;- lblLogo : JLabel" vertex="1">
+          <mxGeometry height="110" width="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="login-sep" parent="login-header" style="line;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="10" width="240" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="login-methods" parent="login-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="+ LoginNew()&#xa;- initComponents()&#xa;- BtnLoginActionPerformed()" vertex="1">
+          <mxGeometry height="60" width="240" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="main-header" parent="pkg-view" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" value="Main" vertex="1">
+          <mxGeometry height="310" width="240" x="300" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="main-attrs" parent="main-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="- products : ArrayList&lt;Product&gt;&#xa;- currentFile : File&#xa;- tblProducts : JTable&#xa;- scrollPane : JScrollPane&#xa;- jMenuBar1 : JMenuBar" vertex="1">
+          <mxGeometry height="90" width="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="main-sep" parent="main-header" style="line;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="10" width="240" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="main-methods" parent="main-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="+ Main()&#xa;- openFile() : void&#xa;- saveFile() : void&#xa;- saveFileAs() : void&#xa;- showProducts() : void&#xa;- insertProduct() : void&#xa;- deleteProduct() : void&#xa;- searchProduct() : void&#xa;- exitApp() : void" vertex="1">
+          <mxGeometry height="155" width="240" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="pd-header" parent="pkg-view" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" value="ProductDialog" vertex="1">
+          <mxGeometry height="250" width="240" x="20" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="pd-attrs" parent="pd-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="- saved : boolean&#xa;- product : Product&#xa;- txtName : JTextField&#xa;- txtCategory : JTextField&#xa;- txtBrand : JTextField&#xa;- txtPrice : JTextField&#xa;- txtQuantity : JTextField&#xa;- txtSupplier : JTextField" vertex="1">
+          <mxGeometry height="120" width="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pd-sep" parent="pd-header" style="line;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="10" width="240" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="pd-methods" parent="pd-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="+ ProductDialog(parent, modal)&#xa;+ isSaved() : boolean&#xa;+ getProduct() : Product&#xa;- btnSaveActionPerformed()" vertex="1">
+          <mxGeometry height="65" width="240" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sd-header" parent="pkg-view" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" value="SearchDialog" vertex="1">
+          <mxGeometry height="250" width="240" x="300" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="sd-attrs" parent="sd-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="- risultati : ArrayList&lt;Product&gt;&#xa;- tblResult : JTable&#xa;- scrollPaneResults : JScrollPane&#xa;- btnClose : JButton&#xa;- btnExport : JButton" vertex="1">
+          <mxGeometry height="90" width="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sd-sep" parent="sd-header" style="line;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="10" width="240" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="sd-methods" parent="sd-header" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=12;fontFamily=Courier New;" value="+ SearchDialog(parent, modal)&#xa;+ showResults(list : ArrayList) : void&#xa;- exportCSV(list : ArrayList) : void&#xa;- btnCloseActionPerformed()" vertex="1">
+          <mxGeometry height="80" width="240" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="xJYpiDoFWObG3JmeJDzM-1" edge="1" parent="1" source="pm-header" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=bottom;rounded=0;entryX=0.992;entryY=0.047;entryDx=0;entryDy=0;entryPerimeter=0;" target="product-header" value="1">
+          <mxGeometry relative="1" x="-1" y="3" as="geometry">
+            <mxPoint x="480" y="330" as="sourcePoint" />
+            <mxPoint x="640" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xJYpiDoFWObG3JmeJDzM-3" edge="1" parent="1" source="product-methods" style="endArrow=block;startArrow=block;endFill=1;startFill=1;html=1;rounded=0;exitX=1.007;exitY=0.102;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.62;entryDx=0;entryDy=0;entryPerimeter=0;" target="main-methods" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="300" />
+              <mxPoint x="740" y="330" />
+              <mxPoint x="830" y="330" />
+              <mxPoint x="910" y="330" />
+            </Array>
+            <mxPoint x="410" y="430" as="sourcePoint" />
+            <mxPoint x="570" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xJYpiDoFWObG3JmeJDzM-5" edge="1" parent="1" source="csvreader-header" style="endArrow=block;startArrow=block;endFill=1;startFill=1;html=1;rounded=0;entryX=0.016;entryY=0.934;entryDx=0;entryDy=0;entryPerimeter=0;" target="main-methods" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="650" />
+            </Array>
+            <mxPoint x="530" y="400" as="sourcePoint" />
+            <mxPoint x="690" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xJYpiDoFWObG3JmeJDzM-7" edge="1" parent="1" source="product-methods" style="endArrow=block;startArrow=block;endFill=1;startFill=1;html=1;rounded=0;entryX=0.014;entryY=0.056;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.99;exitY=0.45;exitDx=0;exitDy=0;exitPerimeter=0;" target="pd-header" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="730" y="680" as="sourcePoint" />
+            <mxPoint x="890" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xJYpiDoFWObG3JmeJDzM-8" edge="1" parent="1" source="product-methods" style="endArrow=block;startArrow=block;endFill=1;startFill=1;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=1.001;exitY=0.928;exitDx=0;exitDy=0;exitPerimeter=0;" target="sd-methods" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="421" y="513" as="sourcePoint" />
+            <mxPoint x="827" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
