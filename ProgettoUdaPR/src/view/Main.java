@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.ProductManager;
 import java.awt.HeadlessException;
 import java.awt.TextArea;
 import java.io.File;
@@ -188,16 +189,16 @@ public class Main extends javax.swing.JFrame {
 
     private void InfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InfoActionPerformed
         JOptionPane.showMessageDialog(null,
-            "Warehouse Management v1.0\n"
-            + "Authors: Riccardo Petrone, Giuseppe Romanucci\n"
-            + "School year: 2025/2026\n"
-            + "Blaise Pascal Institute",
-            "About",
-            JOptionPane.INFORMATION_MESSAGE);
+                "Warehouse Management v1.0\n"
+                + "Authors: Riccardo Petrone, Giuseppe Romanucci\n"
+                + "School year: 2025/2026\n"
+                + "Blaise Pascal Institute",
+                "About",
+                JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_InfoActionPerformed
 
     private File currentFile;
-    ArrayList<Product> products = null;
+    private ProductManager manager = new ProductManager();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu About;
     private javax.swing.JMenu Edit;
@@ -216,11 +217,11 @@ public class Main extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void showProducts() {
+        ArrayList<Product> products = manager.getProducts();
         if (products == null || products.isEmpty()) {
             return;
         }
 
-        //scrollPane.setVisible(true); // fa riapparire la tabella
         String[] colonne = {"ID", "Name", "Category", "Brand", "Price", "Quantity", "Supplier"};
         Object[][] dati = new Object[products.size()][7];
 
@@ -246,7 +247,7 @@ public class Main extends javax.swing.JFrame {
             int row = e.getFirstRow();
             int col = e.getColumn();
             Object value = tblProducts.getModel().getValueAt(row, col);
-            Product p = products.get(row);
+            Product p = manager.getProducts().get(row);
 
             try {
                 switch (col) {
@@ -274,7 +275,7 @@ public class Main extends javax.swing.JFrame {
                         "Invalid value! Price must be a decimal number and Quantity must be a whole number.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
-                showProducts(); // ripristina la tabella con i valori originali
+                showProducts();
             }
         });
 
@@ -286,19 +287,10 @@ public class Main extends javax.swing.JFrame {
     private void openFile() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-
-            // prendo il file scelto dall'utente
             currentFile = chooser.getSelectedFile();
-
-            // creo il reader passandogli il percorso del file
-            csvReader reader = new csvReader();
-
-            // leggo il CSV e salvo tutto nell'array
-            products = reader.readFile(currentFile.getAbsolutePath());
-
-            JOptionPane.showMessageDialog(this, products.size() + " products have been uploaded");
+            manager.loadFromFile(currentFile.getAbsolutePath());
+            JOptionPane.showMessageDialog(this, manager.getProducts().size() + " products have been uploaded");
             showProducts();
-
         }
     }
 
@@ -309,17 +301,8 @@ public class Main extends javax.swing.JFrame {
         }
 
         try {
-            FileWriter fw = new FileWriter(currentFile);
-
-            fw.write("ID,Name,Category,Brand,Price,Quantity,Supplier\n");
-
-            for (Product p : products) {
-                fw.write(p.toString() + "\n");
-            }
-
-            fw.close();
-            JOptionPane.showMessageDialog(this, "file saved!");
-
+            manager.saveToFile(currentFile.getAbsolutePath());
+            JOptionPane.showMessageDialog(this, "File saved!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
@@ -343,9 +326,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void insertProduct() {
-
-        if (products == null) {
-            JOptionPane.showMessageDialog(this, "opne a file first!");
+        if (manager.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Open a file first!");
             return;
         }
 
@@ -353,40 +335,25 @@ public class Main extends javax.swing.JFrame {
         dialog.setVisible(true);
 
         if (dialog.isSaved()) {
-            Product p = dialog.getProduct();
-
-            int newId = 0;
-            for (Product p2 : products) {
-                if (p2.getId() > newId) {
-                    newId = p2.getId();
-                }
-            }
-            newId++;
-
-            Product newProduct = new Product(newId, p.getName(), p.getCategory(), p.getBrand(), p.getPrice(), p.getQuantity(), p.getSupplier());
-            products.add(newProduct);
+            manager.addProduct(dialog.getProduct());
             showProducts();
             JOptionPane.showMessageDialog(this, "Product added successfully!");
         }
     }
 
     private void deleteProduct() {
-
-        if (products == null) {
+        if (manager.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Open a file first!");
             return;
         }
 
         int selectedRow = tblProducts.getSelectedRow();
-
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select a product first!");
             return;
         }
 
-        Product p = products.get(selectedRow);
-
-        // confir contiene 0,1 o 2 in base alla scelta fatta dall'utente
+        Product p = manager.getProducts().get(selectedRow);
         int confirm = JOptionPane.showConfirmDialog(this,
                 "Are you sure you want to delete:\n" + p.getName() + " (" + p.getBrand() + ")?",
                 "Delete",
@@ -394,15 +361,14 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.WARNING_MESSAGE);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            products.remove(selectedRow);
+            manager.removeProduct(selectedRow);
             showProducts();
             JOptionPane.showMessageDialog(this, p.getName() + " deleted successfully!");
         }
     }
-
+    
     private void searchProduct() {
-
-        if (products == null) {
+        if (manager.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Open a file first!");
             return;
         }
@@ -411,8 +377,7 @@ public class Main extends javax.swing.JFrame {
         String criterio = (String) JOptionPane.showInputDialog(
                 this, "Search by:", "Search",
                 JOptionPane.PLAIN_MESSAGE,
-                null, criteri, criteri[0]
-        );
+                null, criteri, criteri[0]);
         if (criterio == null) {
             return;
         }
@@ -422,33 +387,7 @@ public class Main extends javax.swing.JFrame {
             return;
         }
 
-        String q = query.trim().toLowerCase();
-        ArrayList<Product> risultati = new ArrayList<>();
-
-        for (Product p : products) {
-            switch (criterio) {
-                case "Name":
-                    if (p.getName().toLowerCase().contains(q)) {
-                        risultati.add(p);
-                    }
-                    break;
-                case "Category":
-                    if (p.getCategory().toLowerCase().contains(q)) {
-                        risultati.add(p);
-                    }
-                    break;
-                case "Brand":
-                    if (p.getBrand().toLowerCase().contains(q)) {
-                        risultati.add(p);
-                    }
-                    break;
-                case "Supplier":
-                    if (p.getSupplier().toLowerCase().contains(q)) {
-                        risultati.add(p);
-                    }
-                    break;
-            }
-        }
+        ArrayList<Product> risultati = manager.search(criterio, query);
 
         if (risultati.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No products found.");
